@@ -1,10 +1,45 @@
 "use client";
-
-import { useState } from "react";
-import { Button } from "antd";
+import React, { useState } from 'react';
+import { Button,Menu } from "antd";
 import Image from "next/image";
 import styles from "./page.module.css";
-
+import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+const items = [
+  {
+    label: 'Home',
+    key: 'mail',
+    icon: <MailOutlined />,
+  },
+  {
+    label: 'Cv',
+    key: 'app',
+    icon: <AppstoreOutlined />,
+    disabled: true,
+  },
+  {
+    label: 'Project',
+    key: 'SubMenu',
+    icon: <SettingOutlined />,
+    children: [
+      {
+        type: 'group',
+        label: 'Personal project',
+        children: [
+          { label: 'Work experience 1', key: 'setting:1' },
+        ],
+      },
+      
+    ],
+  },
+];
+const Header = () => {
+  const [current, setCurrent] = useState('mail');
+  const onClick = e => {
+    console.log('click ', e);
+    setCurrent(e.key);
+  };
+  return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} styles={{backgroundColor:"grey"}} />;
+};
 export default function Home() {
   const [count, setCount] = useState(0);
 
@@ -15,6 +50,7 @@ export default function Home() {
   return (
     <>
       <div>
+        <Header/>
         <h1>elise personal project</h1>
         <p style={{ backgroundColor: "pink" }}>
           this project is used for nothing
@@ -55,4 +91,6 @@ export default function Home() {
     </>
   );
 }
+
+
 
