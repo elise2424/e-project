@@ -1,9 +1,15 @@
 "use client";
 import React, { useState } from 'react';
-import { Button,Menu } from "antd";
-import Image from "next/image";
+import { Button,Menu, Row, Image, Col } from "antd";
+// import Image from "next/image";
 import styles from "./page.module.css";
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { MathJax, MathJaxContext } from "better-react-mathjax";
+
+import dynamic from 'next/dynamic'
+
+const Plot = dynamic(() => import('react-plotly.js'), { ssr: false })
+
 const items = [
   {
     label: 'Home',
@@ -47,50 +53,46 @@ export default function Home() {
     console.log("Elise project begin");
   };
 
+  const data = [
+    { x: [1, 2, 3], y: [2, 6, 3], type: 'scatter', mode: 'lines+points', marker: { color: 'red' } },
+  ]
+const formula = `\\sigma = E \\cdot \\varepsilon`;
   return (
     <>
-      <div>
-        <Header/>
-        <h1>elise personal project</h1>
-        <p style={{ backgroundColor: "pink" }}>
-          this project is used for nothing
-        </p>
-      </div>
+        <Header/>    
+        <Row>
+          <Col span={20} justify="center" align="middle">           
+            <h2> Project - Research of implementation of math model applied in manufacturing </h2>
+            <p>
+              This project is used to stimulate the stress-strain behaviour of an aluminium alloy using python, and use it to predict the mechanical behaviours of material. It combines the theory and a simple coding exercise to illustrate how material respond under tensile loading and how to visualize the curve using python plotiing tools.
+            </p>
+          </Col>
+        </Row>
 
       <div className={styles.card}>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <button
-          onClick={eliseawesome}
-          style={{ backgroundColor: "pink", padding: "60px" }}
-        >
-          {" "}
-          elise awesome button{" "}
-        </button>
-        <p>
-          Edit <code>app/page.jsx</code> and save to test
-        </p>
-        <img style={{ width: "400px" }} src="/lbb.png" alt="lbb" />
+        <Row>
+          <Col span={12}> <Image style={{ width: "400px" }} src="/c4.png" alt="c4" /></Col>
+          <Col span={12}> <Image style={{ width: "400px" }} src="/car.png" alt="car" /></Col>
+        </Row>
 
-        <iframe
-          width="1071"
-          height="602"
-          src="https://www.youtube.com/embed/6XSoVmT0qXo?list=RD6XSoVmT0qXo"
-          title="G.E.M.鄧紫棋【別勉強 Don't Force It (feat. Eric周興哲)】Official Music Video"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-        ></iframe>
-        <Button type="primary" shape="circle">
-          A
-        </Button>
-        <Button type="primary">AntD is working!</Button>
+        <Row>
+          <Col span={12} ><Image style={{ width: "400px" }} src="/car2.png" alt="car2" /></Col>
+          <Col span={12}><Image style={{ width: "400px" }} src="/car3.png" alt="car3" /></Col>
+        </Row>
+        
+      </div>
+
+      <div> 
+        <h2> Model Section </h2>
+        <MathJaxContext>
+      <div style={{ fontSize: "24px", margin: "20px" }}>
+        <MathJax inline dynamic>
+          {"\\(" + formula + "\\)"}
+        </MathJax>
+      </div>
+    </MathJaxContext>
+        <Plot data={data} layout={{ title: 'My Plot' }} />
       </div>
     </>
   );
 }
-
-
-
